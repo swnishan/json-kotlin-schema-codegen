@@ -70,6 +70,7 @@ object Configurator {
                 "kotlin" -> TargetLanguage.KOTLIN
                 "java" -> TargetLanguage.JAVA
                 "typescript" -> TargetLanguage.TYPESCRIPT
+                "swift" -> TargetLanguage.SWIFT
                 else -> invalid(it)
             }
         }

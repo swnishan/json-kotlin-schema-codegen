@@ -1,0 +1,32 @@
+{{>header}}{{#packageName}}package {{&packageName}};
+
+{{/packageName}}{{#constraints}}{{>system_imports}}{{#imports}}import {{&.}};
+{{#last}}
+{{/last}}{{/imports}}{{#schema}}{{#description}}/**
+ * {{&safeDescription}}
+ */
+{{/description}}{{/schema}}{{>annotations}}public class {{&className}}{{>extends_implements}} {
+{{>add_statics}}
+{{#nonBaseProperties}}    private final {{>type}} {{&javaName}};
+{{#last}}
+{{/last}}{{/nonBaseProperties}}{{#numberOfProperties}}    public {{&className}}({{#properties}}{{^first}},{{/first}}
+{{>type}} {{&javaName}}{{/properties}}
+) {
+{{#baseClass}}{{#constraints}}        super({{#properties}}{{#extendedInDerived}}validate{{&capitalisedName}}({{&javaName}}){{/extendedInDerived}}{{!
+}}{{^extendedInDerived}}{{&javaName}}{{/extendedInDerived}}{{^last}}, {{/last}}{{/properties}});
+{{/constraints}}{{/baseClass}}{{#properties}}{{^baseProperty}}{{^isPrimitive}}{{^nullable}}        if ({{&javaName}} == null)
+{{>tniae}}("Must not be null - {{&javaName}}");
+{{/nullable}}{{/isPrimitive}}{{/baseProperty}}{{>validations}}{{^baseProperty}}        this.{{&javaName}} = {{&javaName}};
+{{/baseProperty}}{{/properties}}    }
+{{#properties}}{{#extendedFromBase}}
+    private static {{>type}} validate{{&capitalisedName}}({{>type}} {{&javaName}}) {
+    {{^isPrimitive}}{{^nullable}}        if ({{&javaName}} == null)
+    {{>tniae}}("Must not be null - {{&javaName}}");
+    {{/nullable}}{{/isPrimitive}}{{>validations}}        return {{&javaName}};
+    }
+{{/extendedFromBase}}{{/properties}}
+{{/numberOfProperties}}{{>getters}}{{>equals}}
+{{>hashcode}}
+{{>builder}}{{#nestedClasses}}
+    {{#constraints}}{{#indent.increment}}{{>nested_class}}{{/indent.increment}}{{/constraints}}{{/nestedClasses}}
+}{{/constraints}}

@@ -27,6 +27,7 @@ package net.pwall.json.schema.codegen
 
 enum class TargetLanguage(val directories: List<String>, val ext: String) {
     KOTLIN(listOf("kotlin", "common"), "kt"),
+    SWIFT(listOf("swift", "common"), "swift"),
     JAVA(listOf("java", "common"), "java"),
     JAVA16(listOf("java16", "common"), "java"),
     TYPESCRIPT(listOf("typescript", "common"), "ts"),
